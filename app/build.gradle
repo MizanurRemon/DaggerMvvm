@@ -6,12 +6,12 @@ plugins {
 
 android {
     namespace 'com.example.daggermvvm'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.example.daggermvvm"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -30,6 +30,7 @@ android {
     }
     kotlinOptions {
         jvmTarget = '1.8'
+        freeCompilerArgs = ['-Xjvm-default=enable']
     }
 }
 
@@ -44,20 +45,44 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0'
 
     //dagger
-    def daggerVersion = "2.42.2"
+    def daggerVersion = "2.44.2"
     implementation "com.google.dagger:dagger:$daggerVersion"
     kapt "com.google.dagger:dagger-compiler:$daggerVersion"
 
-    //mvvm
-    def lifecycle_version = "2.6.0-alpha01"
+    def lifecycle_version = "2.5.1"
+    def arch_version = "2.1.0"
+
     // ViewModel
-    //noinspection GradleDependency
     implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version")
     // ViewModel utilities for Compose
-    //noinspection GradleDependency
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:$lifecycle_version")
     // LiveData
-    implementation("androidx.lifecycle:lifecycle-live data-ktx:$lifecycle_version")
+    implementation("androidx.lifecycle:lifecycle-livedata-ktx:$lifecycle_version")
+    // Lifecycles only (without ViewModel or LiveData)
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:$lifecycle_version")
+
+    // Saved state module for ViewModel
+    implementation("androidx.lifecycle:lifecycle-viewmodel-savedstate:$lifecycle_version")
+
+    // Annotation processor
+    kapt("androidx.lifecycle:lifecycle-compiler:$lifecycle_version")
+    // alternately - if using Java8, use the following instead of lifecycle-compiler
+    implementation("androidx.lifecycle:lifecycle-common-java8:$lifecycle_version")
+
+    // optional - helpers for implementing LifecycleOwner in a Service
+    implementation("androidx.lifecycle:lifecycle-service:$lifecycle_version")
+
+    // optional - ProcessLifecycleOwner provides a lifecycle for the whole application process
+    implementation("androidx.lifecycle:lifecycle-process:$lifecycle_version")
+
+    // optional - ReactiveStreams support for LiveData
+    implementation("androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version")
+
+    // optional - Test helpers for LiveData
+    testImplementation("androidx.arch.core:core-testing:$arch_version")
+
+    // optional - Test helpers for Lifecycle runtime
+    testImplementation ("androidx.lifecycle:lifecycle-runtime-testing:$lifecycle_version")
 
     //retrofit
     def retrofitVersion ="2.9.0"
@@ -68,5 +93,14 @@ dependencies {
     def coroutineVer = "1.6.4"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutineVer"
     implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutineVer"
+
+    implementation 'androidx.recyclerview:recyclerview:1.2.0'
+
+    implementation 'com.intuit.sdp:sdp-android:1.1.0'
+
+    implementation 'com.github.bumptech.glide:glide:4.12.0'
+    //noinspection GradleCompatible
+    implementation 'com.android.support:support-v4:19.1.0'
+
 
 }
